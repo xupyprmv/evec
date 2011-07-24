@@ -14,7 +14,7 @@ $status = $leech->getServerStatus();
 echo ('Vesrion : '.$status['@attributes']['version'].'<br/>');
 echo ('Current time : '.$status['currentTime'].'<br/>');
 echo ('Cache time : '.$status['cachedUntil'].'<br/>');
-echo ('Server status : '.(($status['result']['serverOpen']=='true')?'active':'downtime').'<br/>');
+echo ('Server status : '.((strtolower($status['result']['serverOpen'])=='true')?'active':'downtime').'<br/>');
 echo ('Online players : '.$status['result']['onlinePlayers'].'<br/>');
 ?>
 </body>

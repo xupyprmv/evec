@@ -6,9 +6,17 @@
 </head>
 <body>
 <?php
-require_once './leechs/Leechs.php';
-
+function __autoload($class_name) {
+	if (strpos($class_name, "C")===0) {
+		require_once './core/'.$class_name.'.php';
+	} else if (strpos($class_name, "L")===0) {
+		require_once './leechs/'.$class_name.'.php';	
+	} else if (strpos($class_name, "R")===0) {
+		require_once './reports/'.$class_name.'.php';	
+	}	
+}
 $leech = new Leechs();
+$core = new Core();
 
 $status = $leech->getServerStatus();
 echo ('Vesrion : '.$status['@attributes']['version'].'<br/>');

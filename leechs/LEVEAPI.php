@@ -43,7 +43,15 @@ class LEVEAPI {
 			self::$fullKey = $fullAPIKey;
 		}
 	}
+	
+	public function getLimitedKey() {
+		return self::$limitedKey;		
+	}
 
+	public function getFullKey() {
+		return self::$fullKey;		
+	}
+	
 	/**
 	 * Get server status
 	 *
@@ -51,7 +59,7 @@ class LEVEAPI {
 	 */
 	public function getServerStatus() {
 		$response = $this->curl_get(self::$root.'server/ServerStatus.xml.aspx');
-		return $this->unserializeXml ($response);
+		return $response;
 	}
 
 	/**
@@ -63,10 +71,14 @@ class LEVEAPI {
 	 */
 	public function unserializeXml($input, $recurse = false)
 	{
-		$data = ((!$recurse) && is_string($input))? simplexml_load_string($input): $input;
-		if ($data instanceof SimpleXMLElement) $data = (array) $data;
-		if (is_array($data)) foreach ($data as &$item) $item = $this->unserializeXml($item, true);
-		return $data;
+		try {
+			$data = ((!$recurse) && is_string($input))? simplexml_load_string($input): $input;
+			if ($data instanceof SimpleXMLElement) $data = (array) $data;
+			if (is_array($data)) foreach ($data as &$item) $item = $this->unserializeXml($item, true);
+			return $data;
+		} catch (Exception $e) {
+			throw new Exception ('Can\'t parse response from API: '. $e->getMessage());
+		}
 	}
 	
 	/**

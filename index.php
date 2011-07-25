@@ -15,9 +15,9 @@ function __autoload($class_name) {
 		require_once './reports/'.$class_name.'.php';	
 	}	
 }
-$leech = new Leechs();
-$core = new Core();
+Core::install();
 
+$leech = new Leechs();
 $status = $leech->getServerStatus();
 echo ('Vesrion : '.$status['@attributes']['version'].'<br/>');
 echo ('Current time : '.$status['currentTime'].'<br/>');

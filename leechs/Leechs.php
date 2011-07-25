@@ -1,8 +1,4 @@
 <?php
-function __autoload($class_name) {
-	require_once './leechs/'.$class_name.'.php';	
-}
-
 /**
  * Container for all others Leech's classes (classes that get data from EVE API and push it to local database 
  * 
@@ -18,7 +14,9 @@ class Leechs {
 	 * @return LEVEAPI API connector
 	 */
 	public function __construct($serverAddress = 'http://api.eve-online.com/', $limitedAPIKey = null, $fullAPIKey = null) {
-		$this->api = new LEVEAPI($serverAddress, $limitedAPIKey, $fullAPIKey);		
+		$api = new LEVEAPI($serverAddress, $limitedAPIKey, $fullAPIKey);
+		$loggedAPI = new LLogDecorator($api);
+		$this->api = $loggedAPI;  		
 	}
 	
 	/**
@@ -28,12 +26,9 @@ class Leechs {
 	private $api = null;
 	
 	/**
-	 * Get EVE API
+	 * Get status of EVE server
 	 * 
-	 * @param $serverAdress 
-	 * @param $limitedKey
-	 * @param $fullKey
-	 * @return LEVEAPI EVE API connector
+	 * @return mixed result as object
 	 */
 	public function getServerStatus() {
 		return $this->api->getServerStatus();

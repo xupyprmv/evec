@@ -62,6 +62,8 @@ class LEVEAPI {
 		return self::$fullKey;		
 	}
 	
+// API BLOCK [BEGIN]
+	
 	/**
 	 * Get server status
 	 *
@@ -71,6 +73,11 @@ class LEVEAPI {
 		$response = $this->curl_get(self::$root.'server/ServerStatus.xml.aspx');
 		return $response;
 	}
+	
+	public function getCharacterWalletTransactions($userId) {
+		
+	}
+// API BLOCK [END]
 
 	/**
 	 * Parse XML to PHP object

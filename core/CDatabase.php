@@ -60,6 +60,15 @@ class CDatabase {
     	}
 	} 
 	
+	/**
+	 * Log EVE API request to database 
+	 * 
+	 * @param $uid unique identifier for request
+	 * @param $apiKey apiKey
+	 * @param $requestFunction EVE API method
+	 * @param $requestArguments request parameters
+	 * @return void
+	 */
 	public function logAPIRequest($uid, $apiKey, $requestFunction, $requestArguments) {
 		try {
 			self::$db->beginTransaction();
@@ -76,6 +85,15 @@ class CDatabase {
     	}		
 	}
 	
+	/**
+	 * Log EVE API response to database 
+	 * 
+	 * @param $uid unique identifier of request
+	 * @param $serverTime time on EVE server
+	 * @param $cacheTime next time request aviable
+	 * @param $response response string
+	 * @return void
+	 */
 	public function logAPIResponse($uid, $serverTime, $cacheTime, $response) {
 		try {
 			self::$db->beginTransaction();

@@ -44,10 +44,20 @@ class LEVEAPI {
 		}
 	}
 	
+	/**
+	 * Returns limited API key
+	 * 
+	 * @return string
+	 */
 	public function getLimitedKey() {
 		return self::$limitedKey;		
 	}
 
+	/**
+	 * Returns full API key
+	 * 
+	 * @return string
+	 */
 	public function getFullKey() {
 		return self::$fullKey;		
 	}

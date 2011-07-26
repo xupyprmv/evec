@@ -16,6 +16,17 @@ class LLogDecorator {
         $this->api = $api;
     }
 
+    /**
+     * Intercept API method execution. 
+     *   - Log request
+     *   - Execute request   
+     *   - Log response
+     *   - Return unserialized response
+     *    
+     * @param $method LEVEAPI method
+     * @param $params LEVEAPI method arguments
+     * @return mixed response as opject
+     */
     public function __call($method, $params) {
 		// log request		
 		$uid = Core::logAPIRequest(($this->api->getFullKey() === null)?$this->api->getFullKey():

@@ -52,7 +52,8 @@ class Core {
 	 * @param $cacheTime next time request aviable
 	 * @param $response response string
 	 * @return void
-	 */	public static function logAPIResponse($uid, $version, $serverTime, $cacheTime, $response) {
+	 */	
+	public static function logAPIResponse($uid, $version, $serverTime, $cacheTime, $response) {
 		// TODO think about API versions - check version compatibility
 		$db = CDatabase::getInstance(); 
 		$db->logAPIResponse($uid, $serverTime, $cacheTime, $response);

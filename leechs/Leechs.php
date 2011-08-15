@@ -13,7 +13,7 @@ class Leechs {
 	 * @param $fullAPIKey Full API key
 	 * @return LEVEAPI API connector
 	 */
-	public function __construct($serverAddress = 'http://api.eve-online.com/', $limitedAPIKey = null, $fullAPIKey = null) {
+	public function __construct($serverAddress = 'https://api.eve-online.com/', $limitedAPIKey = null, $fullAPIKey = null) {
 		$api = new LEVEAPI($serverAddress, $limitedAPIKey, $fullAPIKey);
 		$loggedAPI = new LLogDecorator($api);
 		$this->api = $loggedAPI;  		

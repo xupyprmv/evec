@@ -1,5 +1,8 @@
 <?php
 class CAuthentication {
+	
+	public static $x = '123';
+	
 	/**
 	 * Is user already log in?
 	 * 
@@ -18,7 +21,6 @@ class CAuthentication {
 	 */
 	public static function login($userId = null, $fullAPIKey = null) {
 		// TODO Check that credential are valid
-		echo '1';
 		if (!empty($_POST['userId']) && !empty($_POST['APIKey'])) {
 			echo '2';
 			$_SESSION['userId'] = $_POST['userId'];
@@ -35,8 +37,7 @@ class CAuthentication {
 	 * @return void
 	 */
 	public static function viewLoginPage() {
-		$loginPage = file_get_contents('./templates/login.tpl');
-		echo $loginPage;
+		include './templates/login.tpl';
 	}
 }
 ?>

@@ -13,12 +13,6 @@ class LEVEAPI {
 	private static $root;
 
 	/**
-	 * Limited API key
-	 * @var string
-	 */
-	private static $limitedKey;
-
-	/**
 	 * Full API key
 	 * @var string
 	 */
@@ -32,27 +26,15 @@ class LEVEAPI {
 	 * @param $fullAPIKey Full API key
 	 * @return LEVEAPI API connector
 	 */
-	public function __construct ($serverAddress, $limitedAPIKey, $fullAPIKey) {
+	public function __construct ($serverAddress, $fullAPIKey) {
 		if (isset($serverAddress)) {
 			self::$root = $serverAddress;
-		}
-		if (isset($limitedAPIKey)) {
-			self::$limitedKey = $limitedAPIKey;
 		}
 		if (isset($fullAPIKey)) {
 			self::$fullKey = $fullAPIKey;
 		}
 	}
 	
-	/**
-	 * Returns limited API key
-	 * 
-	 * @return string
-	 */
-	public function getLimitedKey() {
-		return self::$limitedKey;		
-	}
-
 	/**
 	 * Returns full API key
 	 * 
@@ -71,6 +53,28 @@ class LEVEAPI {
 	 */
 	public function getServerStatus() {
 		$response = $this->curl_get(self::$root.'server/ServerStatus.xml.aspx');
+		return $response;
+	}
+	
+/*	
+<?xml version='1.0' encoding='UTF-8'?>
+<eveapi version="2">
+  <currentTime>2007-12-12 11:48:50</currentTime>
+  <result>
+    <rowset name="characters" key="characterID" columns="name,characterID,corporationName,corporationID">
+      <row name="Mary" characterID="150267069" corporationName="Starbase Anchoring Corp" corporationID="150279367" />
+      <row name="Marcus" characterID="150302299" corporationName="Marcus Corp" corporationID=150333466" />
+      <row name="Dieniafire" characterID="150340823" corporationName="center for Advanced Studies" corporationID="1000169" />
+    </rowset>
+  </result>
+  <cachedUntil>2007-12-12 12:48:50</cachedUntil>
+</eveapi>
+*/
+	public function getCharacters($userId) {
+		$post = array();
+		$post['apiKey'] = self::getFullKey();
+		$post['userID'] = $userId;		
+		$response = $this->curl_get(self::$root.'account/Characters.xml.aspx', $post);
 		return $response;
 	}
 	

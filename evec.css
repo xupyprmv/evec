@@ -1,0 +1,59 @@
+@CHARSET "UTF-8";
+body {
+	background-color: #000000;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #DDD;
+	background:url('img/contentSmoke.jpg') no-repeat #080809;
+	min-height:600px;
+	padding: 5px;
+}
+
+h1 {
+	color: orange;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 18px;
+	border-bottom: 1px solid #888;
+}
+
+hr {
+	border-color: #FFFFFF;
+}
+
+a {
+	text-decoration: none;
+	color: orange;
+}
+
+div.header {
+	float: right;
+}
+
+div img.infoIcon {
+	float: right;
+}
+
+table {
+	border-spacing: 0;
+	border-color: gray;
+	padding-bottom: 5px;
+}
+
+table tr td.header { 
+	background-color: #4D4D57; 
+	font-weight: bold; 
+	text-transform: uppercase; 
+	line-height: 16px;
+	text-align: center;
+}
+
+td {
+	background-color: black;
+	padding: 5px;
+	color: #DDD;
+	vertical-align: middle;
+	border: 1px solid #404040;
+	line-height: 14px;
+	margin: 0;
+}

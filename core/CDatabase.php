@@ -74,7 +74,7 @@ class CDatabase {
 			self::$db->beginTransaction();
 			$stmt = self::$db->prepare('INSERT INTO api_request_log (uniqid, apiKey, requestFunction, requestArguments, evecTime) VALUES (?, ?, ?, ?, NOW())');
 			$stmt->bindValue(1, $uid, PDO::PARAM_STR);
-            $stmt->bindValue(2, $apiKey, PDO::PARAM_STR);
+            $stmt->bindValue(2, md5($apiKey), PDO::PARAM_STR); //TODO may be dont save this field at all?
             $stmt->bindValue(3, $requestFunction, PDO::PARAM_STR);
             $stmt->bindValue(4, $requestArguments, PDO::PARAM_STR);
             $stmt->execute();

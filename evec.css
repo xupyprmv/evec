@@ -30,8 +30,9 @@ div.header {
 	float: right;
 }
 
-div img.infoIcon {
+div.infoIcon {
 	float: right;
+	padding-left: 10px;
 }
 
 table {

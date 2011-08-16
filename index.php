@@ -10,28 +10,20 @@ session_start();
 	<link rel="icon" href="favicon.ico">
 </head>
 <body>
-<div class="header">NOTE: This site is third-party software. <img class="infoIcon" alt="Info" src="img/infoIcon.png" title="About EVEC"></div>
+<div class="infoIcon"><img alt="Info" src="img/infoIcon.png" title="About EVEC"></div>
+<div class="header">EVE economy: tool for traders</div>
 <?php
 function __autoload($class_name) {
 	if (strpos($class_name, "C")===0) {
 		require_once './core/'.$class_name.'.php';
-	} else if (strpos($class_name, "L")===0) {
-		require_once './leechs/'.$class_name.'.php';	
+	} else if (strpos($class_name, "E")===0) {
+		require_once './eveapi/'.$class_name.'.php';	
 	} else if (strpos($class_name, "R")===0) {
 		require_once './reports/'.$class_name.'.php';	
 	}	
 }
-if (!CAuthentication::isAuthenticatied() && !CAuthentication::login()) {
-	CAuthentication::viewLoginPage();
-} else {	
-	Core::install();
-	$leech = new Leechs();
-	$status = $leech->getServerStatus();
-	echo ('Vesrion : '.$status['@attributes']['version'].'<br/>');
-	echo ('Current time : '.$status['currentTime'].'<br/>');
-	echo ('Cache time : '.$status['cachedUntil'].'<br/>');
-	echo ('Server status : '.((strtolower($status['result']['serverOpen'])=='true')?'active':'downtime').'<br/>');
-	echo ('Online players : '.$status['result']['onlinePlayers'].'<br/>');
+if (CAuthentication::isAuthenticatied() || CAuthentication::login()) {
+	Core::viewMainPage();
 }
 ?>
 </body>

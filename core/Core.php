@@ -7,6 +7,30 @@
 class Core {
 	
 	/**
+	 * EVE API connector
+	 * @var EVEAPI
+	 */
+	private static $api = null;
+	
+	/**
+	 * Create API connector
+	 * 
+	 * @param $serverAddress Link to EVE API's server root URL (default `http://api.eve-online.com/`)
+	 * @param $limitedAPIKey Limited API key
+	 * @param $fullAPIKey Full API key
+	 * @return EVEAPI API connector
+	 */
+	public function getEVEAPI($fullAPIKey = null) {
+		if (!empty($fullAPIKey) || empty(self::$api)) {
+			$api = new EVEAPI($fullAPIKey);		
+			$loggedAPI = new EVEAPILogDecorator($api);
+			// TODO cache decorator
+			self::$api = $loggedAPI;
+		}		
+		return self::$api;
+	}	
+	
+	/**
 	 * Connect to database
 	 * 
 	 * @param $dsn data source name for PDO
@@ -25,7 +49,7 @@ class Core {
 	 */
 	public static function install() {
 		$db = CDatabase::getInstance();
-		$db->install(); //TODO create separated user-called method
+		$db->install();
 	}
 	
 	/**
@@ -57,6 +81,25 @@ class Core {
 		// TODO think about API versions - check version compatibility
 		$db = CDatabase::getInstance(); 
 		$db->logAPIResponse($uid, $serverTime, $cacheTime, $response);
+	}
+	
+	/**
+	 * Outputs main page
+	 * 
+	 * @return void
+	 */
+	public static function viewMainPage() {
+		$characters = Core::getEVEAPI($_SESSION['APIKey'])->getCharacters($_SESSION['userId']);
+		include './templates/main.tpl';
+	}
+	
+	/**
+	 * Outputs error message
+	 * 
+	 * @return void
+	 */
+	public static function viewErrorPage($errorMessage) {
+		include './templates/error.tpl';
 	}
 } 
 ?>

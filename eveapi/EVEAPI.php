@@ -4,13 +4,13 @@
  *
  * @author Vladimir Maksimenko (xupypr@xupypr.com)
  */
-class LEVEAPI {
+class EVEAPI {
 
 	/**
 	 * Link to EVE API's server root URL
 	 * @var string
 	 */
-	private static $root;
+	private static $root = 'https://api.eve-online.com/';
 
 	/**
 	 * Full API key
@@ -24,12 +24,9 @@ class LEVEAPI {
 	 * @param $serverAddress Link to EVE API's server root URL
 	 * @param $limitedAPIKey Limited API key
 	 * @param $fullAPIKey Full API key
-	 * @return LEVEAPI API connector
+	 * @return EVEAPI API connector
 	 */
-	public function __construct ($serverAddress, $fullAPIKey) {
-		if (isset($serverAddress)) {
-			self::$root = $serverAddress;
-		}
+	public function __construct ($fullAPIKey) {
 		if (isset($fullAPIKey)) {
 			self::$fullKey = $fullAPIKey;
 		}
@@ -121,9 +118,11 @@ class LEVEAPI {
 		CURLOPT_RETURNTRANSFER => 1,
 		CURLOPT_FORBID_REUSE => 1,
 		CURLOPT_TIMEOUT => 4,
+		CURLOPT_SSL_VERIFYPEER => 0,
+		CURLOPT_SSL_VERIFYHOST => 0,
 		CURLOPT_POSTFIELDS => http_build_query($post)
 		);
-
+		
 		$ch = curl_init();
 		curl_setopt_array($ch, ($options + $defaults));
 		if( ! $result = curl_exec($ch))
@@ -149,7 +148,9 @@ class LEVEAPI {
 		CURLOPT_URL => $url. (strpos($url, '?') === FALSE ? '?' : ''). http_build_query($get),
 		CURLOPT_HEADER => 0,
 		CURLOPT_RETURNTRANSFER => TRUE,
-		CURLOPT_TIMEOUT => 4
+		CURLOPT_TIMEOUT => 4,
+		CURLOPT_SSL_VERIFYPEER => 0,
+		CURLOPT_SSL_VERIFYHOST => 0
 		);
 
 		$ch = curl_init();

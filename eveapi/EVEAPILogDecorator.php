@@ -1,14 +1,15 @@
 <?php
 /**
- * Decorator for loggin EVE API requests and responses 
+ * Decorator for logging EVE API requests and responses
+ * Returns EVE API results as objects 
  *  
  * @author Vladimir Maksimenko (xupypr@xupypr.com)
  */
-class LLogDecorator {
+class EVEAPILogDecorator {
 	/**
 	 * EVE API
 	 * 
-	 * @var LEVEAPI
+	 * @var EVEAPI
 	 */
     private $api;
 
@@ -23,16 +24,13 @@ class LLogDecorator {
      *   - Log response
      *   - Return unserialized response
      *    
-     * @param $method LEVEAPI method
-     * @param $params LEVEAPI method arguments
-     * @return mixed response as opject
+     * @param $method EVEAPI method
+     * @param $params EVEAPI method arguments
+     * @return mixed response as object
      */
     public function __call($method, $params) {
 		// log request		
-		$uid = Core::logAPIRequest(($this->api->getFullKey() === null)?$this->api->getFullKey():
-																	($this->api->getLimitedKeyKey() === null)?$this->api->getLimitedKeyKey():null, 
-							$method, 
-							serialize($params));
+		$uid = Core::logAPIRequest($this->api->getFullKey(), $method, serialize($params));
         $response = call_user_func_array(array($this->api, $method), $params);
         // convert XML response to object
         $result = $this->api->unserializeXml ($response);
